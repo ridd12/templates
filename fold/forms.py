@@ -4,6 +4,8 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from fold.models import User
 
+
+
 class RegForm (FlaskForm) :
     username = StringField('Username',validators=[DataRequired()])
     email=StringField('email',validators=[DataRequired(),Email()])
@@ -15,3 +17,8 @@ class RegForm (FlaskForm) :
         user = User.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError('That username is taken. Please choose a different one.')
+
+class loginForm(FlaskForm) :
+    username_or_email=StringField('username_or_email',validators=[DataRequired()])
+    password=PasswordField('password',validators=[DataRequired()])
+    submit = SubmitField('Register')
