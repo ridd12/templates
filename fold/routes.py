@@ -16,6 +16,6 @@ def home():
             user=User( username=form.username.data , confirm_password=form.confirm_password.data , password=form.password.data ,email=form.email.data)
             db.session.add(user)
             db.session.commit()
-            flash('Your name has been saved', 'success')
+            flash(' Your name has been saved ', 'success')
             return render_template('home.html',form=form)
     return render_template('home.html',form=form)
