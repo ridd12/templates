@@ -18,7 +18,13 @@ class RegForm (FlaskForm) :
         if user:
             raise ValidationError('That username is taken. Please choose a different one.')
 
-class loginForm(FlaskForm) :
+class LoginForm(FlaskForm) :
     username_or_email=StringField('username_or_email',validators=[DataRequired()])
     password=PasswordField('password',validators=[DataRequired()])
     submit = SubmitField('Register')
+
+class TransactionForm(FlaskForm) :
+    receiver=StringField('receiver',validators=[DataRequired()])
+    sender=StringField('sender',validators=[DataRequired()])
+    amount=StringField('amount',validators=[DataRequired()])
+    submit = SubmitField('pay')

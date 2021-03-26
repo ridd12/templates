@@ -19,3 +19,19 @@ class User(db.Model,UserMixin):
     def __repr__(self):
         return f"User('{self.id}','{self.username}','{self.email}','{self.password}')"
         # return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+class Block_(db.Model):
+    id=db.Column(db.Integer,primary_key=True)
+    amount=db.Column(db.Integer,unique=False,nullable=False)
+    data=db.Column(db.String(20),unique=False,nullable=False)
+    hash=db.Column(db.String(64),unique=False,nullable=True)
+    nonce=db.Column(db.Integer,nullable=True)
+    previous_hash=db.Column(db.String(64),unique=False,nullable=True)
+    db.session.commit()
+
+    def __repr__(self):
+        return f"Block('{self.id}','{self.amount}','{self.data}','{self.hash}','{self.nonce}','{self.previous_hash}')"
+        # return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+#
+# class Arr(db.model):
+#     arr
