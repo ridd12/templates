@@ -1,63 +1,39 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>fold-title</title>
-  </head>
-  <body>
-    <main role="main" class="container">
-      <div  class="row">
-        <div style="padding-left:227px;" class="col-md-10">
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                  {{ message }}
-                </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
-          {% block content %}{% endblock %}
-        </div>
-      </div>
-    </main>
-    <br>
-    <section>
-      <div class="form-group">
-        <form action="" method="POST" enctype="multipart/form-data">
-              {{ form.hidden_tag() }}
-              {{form.username_or_email.label(class="form-control-label")}}
-              {% if form.username_or_email.errors %}
-                {{form.username_or_email(class="form-control form-control-lg is-invalid")}}
-                <div class="invalid-feedback">
-                  {%for error in form.username_or_email.errors%}
-                    <span>{{error}}</span>
-                  {%endfor%}
-                </div>
-              {% else %}
-                {{form.username_or_email(class="form-control-label")}}
-              {% endif%}
-              <br>
-              {{form.password.label(class="form-control-label")}}
-              {% if form.password.errors %}
-                {{form.password(class="form-control form-control-lg is-invalid")}}
-                <div class="invalid-feedback">
-                  {%for error in form.password.errors%}
-                    <span>{{error}}</span>
-                  {%endfor%}
-                </div>
-              {% else %}
-                {{form.password(class="form-control-label")}}
-              {% endif%}
-              <br>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+{% extends "template.html" %}
+{% block content %}
+<section>
+  <div class="form-group">
+    <form action="" method="POST" enctype="multipart/form-data">
+          {{ form.hidden_tag() }}
+          {{form.username_or_email.label(class="form-control-label")}}
+          {% if form.username_or_email.errors %}
+            {{form.username_or_email(class="form-control form-control-lg is-invalid")}}
+            <div class="invalid-feedback">
+              {%for error in form.username_or_email.errors%}
+                <span>{{error}}</span>
+              {%endfor%}
             </div>
-        </form>
-      </div>
-    </section>
-    <br>
-    <a href="{{url_for('register')}}">Dont have an account yet</a>
-  </body>
-</html>
+          {% else %}
+            {{form.username_or_email(class="form-control-label")}}
+          {% endif%}
+          <br>
+          {{form.password.label(class="form-control-label")}}
+          {% if form.password.errors %}
+            {{form.password(class="form-control form-control-lg is-invalid")}}
+            <div class="invalid-feedback">
+              {%for error in form.password.errors%}
+                <span>{{error}}</span>
+              {%endfor%}
+            </div>
+          {% else %}
+            {{form.password(class="form-control-label")}}
+          {% endif%}
+          <br>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+  </div>
+</section>
+<br>
+<a href="{{url_for('register')}}">Dont have an account yet</a>
+{%endblock content%}

@@ -93,6 +93,9 @@ def transaction():
 def Past_transactions():
     flash(Block_.query.all())
     return render_template('past_transactions.html')
+
+
+
     # amount
     # data
     # hash
