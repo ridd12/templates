@@ -8,13 +8,20 @@ from blockchain import Blockchain , Block
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/home", methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    users = User.query.all()
+    # flash(users)
+    return render_template('home.html',users=users)
 
 @app.route("/logout")
 def logout():
     logout_user()
     flash(' Your name have been logged out ! Please visit again ', 'success')
     return redirect(url_for('home'))
+
+@app.route("/account")
+@login_required
+def account():
+    return render_template('account.html')
 
 @app.route("/registraion", methods=['GET', 'POST'])
 def register():
@@ -59,33 +66,34 @@ def login():
 @login_required
 def transaction():
     form=TransactionForm()
+    # current_user.balance=10000
+    # db.session.commit()
     if form.validate_on_submit():
-        amount=form.amount.data
-        data=str(form.sender.data)+str(form.receiver.data)
-        block=Block(number=amount,data=data)
-        #
-        # try:
-        #     if n==0:
-        #         pass
-        # except:
-        blockchain=Blockchain()
-            # n=0
-        blockchain.mine_block(block)
-        block_=Block_(amount=amount,data=data,hash=block.hash(),nonce=block.nonce,previous_hash=block.previous_hash)
-        # Block('22','ridtoney','0000000000000000000000000000000000000000000000000000000000000000','5004343')
-        db.session.add(block_)
-        # block_=Block_(id=block.id,amount=amount,data=data,hash=block.hash(),nonce=block.nonce,previous_hash=block.previous_hash)
-        db.session.commit()
-        # flash(Block_.query.filter_by(max(id)hash=block.hash()).last())
-        flash("Your transaction is Successfull!")
-        # flash(block_.amount)
-        # flash(block_)
-        for ock in Block_.query.all():
-            if ock.id!=1:
-                ock.previous_hash=a
+        The_one=User.query.filter_by(username=form.receiver.data).first()
+        The_two=User.query.filter_by(username=form.sender.data).first()
+        if current_user.balance>=int(form.amount.data) and int(form.amount.data)>0 and current_user.balance>=0 and The_one!=None and The_two!=None and The_two.username==current_user.username :
+            amount=form.amount.data
+            data=str(form.sender.data)+str(form.receiver.data)
+            block=Block(number=amount,data=data)
+            blockchain=Blockchain()
+            blockchain.mine_block(block)
+            block_=Block_(amount=amount,data=data,hash=block.hash(),nonce=block.nonce,previous_hash=block.previous_hash)
+            db.session.add(block_)
             db.session.commit()
-            a=ock.hash
-        # id=db.Column(
+
+            flash("Your transaction is Successfull!")
+            for ock in Block_.query.all():
+                if ock.id!=1:
+                    ock.previous_hash=a
+                db.session.commit()
+                a=ock.hash
+            current_user.balance-=int(form.amount.data)
+            The_one.balance+=int(form.amount.data)
+             # for testing purpose current_user.balance=10000
+            db.session.commit()
+
+        else:
+            flash('Transaction not granted')
     return render_template('transaction.html',form=form)
 
 @app.route("/home/past_transactions", methods=['GET', 'POST'])
@@ -93,31 +101,3 @@ def transaction():
 def Past_transactions():
     flash(Block_.query.all())
     return render_template('past_transactions.html')
-
-
-
-    # amount
-    # data
-    # hash
-    # nonce
-    # previous_hash
-        # for block in blockchain.dd:
-        #     flask("hii")
-        #     flash(block)
-
-        # block=Block(data=data,amount=amount)
-
-
-
-# receiver
-# sender
-# amount
-# submit
-#
-# amount
-# id
-# data
-# hash
-# nonce
-# previous_hash
-# @app.route("/home/blockchain", methods=['GET', 'POST'])

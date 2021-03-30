@@ -11,6 +11,7 @@ class User(db.Model,UserMixin):
     email=db.Column(db.String(30),unique=False,nullable=False)
     password=db.Column(db.String(20),unique=False,nullable=False)
     confirm_password=db.Column(db.String(20),unique=False,nullable=False)
+    balance=db.Column(db.Integer,unique=False,nullable=False,default='100')
     db.session.commit()
 
     def __repr__(self):
